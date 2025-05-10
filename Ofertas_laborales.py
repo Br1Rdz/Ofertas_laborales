@@ -106,7 +106,7 @@ def display_map(df):
             fields=["sta_name"],
             labels=False
             ))
-    st_map = st_folium(map, width=350, height=350,  key="map", use_container_width=True, returned_objects=["last_object_clicked"])
+    st_map = st_folium(map, width=700, height=350,  key="map", use_container_width=True, returned_objects=["last_object_clicked"])
     
 # ----------------- Gráficos -------------------    
 def grafico_barras(df, filtro):
