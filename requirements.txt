@@ -1,0 +1,7 @@
+streamlit
+pandas
+folium
+streamlit_folium
+nltk
+plotly.express
+sklearn
