@@ -177,7 +177,7 @@ def main():
     '''Funcion principal de la applicacion'''
     #-------- configuracion de pagina ------------  
     
-    st.set_page_config(APP_TITLE, layout = 'center', initial_sidebar_state = "collapsed") # esto es por si sale un espacio entre mapa y gráfico de barras
+    st.set_page_config(APP_TITLE, layout = 'Centered', initial_sidebar_state = "collapsed") # esto es por si sale un espacio entre mapa y gráfico de barras
     st.title(APP_TITLE)
     st.caption(APP_SUB_TITLE)
     
