@@ -140,7 +140,7 @@ def grafico_barras(df, filtro):
     
     fig.update_layout(showlegend=False)
     fig.update_traces(width=0.5)  
-    fig.update_xaxes(anchor="free")
+    fig.update_xaxes(automargin="height+width")
     #fig.update_xaxes(ticks = "outside", tickcolor='black', ticklen=10, tickwidth = 0.5)
     fig.update_layout(
     title={
