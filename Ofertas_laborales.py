@@ -298,47 +298,49 @@ def main():
         with col2:
             st.metric(label= f'Máximo mensual en {estado_maximo}', 
                       value= '${:,}'.format(round(sueldo_maximo)),
-                      delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")            
-    # st.balloons()
-    with st.spinner('Espera mientras elaboró el mapa...'):  
-        display_map(df_filtrada)
+                      delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")
+            
+    with st.container():
         
-    if Campo_laboral != '':
-        grafico_barras(df_filtrada, Campo_laboral)
+        with st.spinner('Espera mientras elaboró el mapa...'):  
+            display_map(df_filtrada)
             
-        with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
-            
-            st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
-            
-            df_filled = df_filtrada.fillna('No disponible') ## sale un warning
-            
-            st.dataframe(df_filled,
-                            column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), ## Hay que agragar la de ingreso_mensual
-                            hide_index = True,
-                            width = 800,
-                            height = 200,
-                            column_config={
-                            "Nombre": st.column_config.TextColumn(
-                                "Puesto",
-                                help="Nombre del puesto"
+        if Campo_laboral != '':
+            grafico_barras(df_filtrada, Campo_laboral)
+                
+            with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
+                
+                st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
+                
+                df_filled = df_filtrada.fillna('No disponible') ## sale un warning
+                
+                st.dataframe(df_filled,
+                                column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), ## Hay que agragar la de ingreso_mensual
+                                hide_index = True,
+                                width = 800,
+                                height = 200,
+                                column_config={
+                                "Nombre": st.column_config.TextColumn(
+                                    "Puesto",
+                                    help="Nombre del puesto"
+                                    ),
+                                "Ciudad": st.column_config.TextColumn(
+                                    "Localidad",
+                                    help="Ubicación del puesto"
+                                    ),
+                                "Sueldo": st.column_config.NumberColumn(
+                                    "Sueldo (mensual)",
+                                    help="Sueldo del puesto",
+                                    format="$%d"
                                 ),
-                            "Ciudad": st.column_config.TextColumn(
-                                "Localidad",
-                                help="Ubicación del puesto"
-                                ),
-                            "Sueldo": st.column_config.NumberColumn(
-                                "Sueldo (mensual)",
-                                help="Sueldo del puesto",
-                                format="$%d"
-                            ),
-                            "Ingreso_mensual": st.column_config.NumberColumn(
-                                "Ingreso (ENSAFI,2024)",
-                                help="Ingreso minimo necesario",
-                                format="$%d"
-                            )
-                            },use_container_width = True
-                        )   
-                    
+                                "Ingreso_mensual": st.column_config.NumberColumn(
+                                    "Ingreso (ENSAFI,2024)",
+                                    help="Ingreso minimo necesario",
+                                    format="$%d"
+                                )
+                                },use_container_width = True
+                            )   
+                        
 
 if __name__ == '__main__':
     main()
