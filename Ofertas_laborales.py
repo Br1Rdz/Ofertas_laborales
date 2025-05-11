@@ -139,6 +139,7 @@ def grafico_barras(df, filtro):
              height=400)
     
     fig.update_layout(showlegend=False)
+    fig.update_traces(width=0.5)  
     fig.update_layout(
     title={
         'x': 0.5,
