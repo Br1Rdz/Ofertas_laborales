@@ -34,7 +34,7 @@ def base_filtrada(df):
     numero = len(df)
     
     if Campo_laboral:
-        st.subheader(f'{numero} ofertas laborales para {Campo_laboral}', divider="gray")
+        st.subheader(f'{numero} ofertas laborales para {Campo_laboral}')
 
     return df, Campo_laboral
 
