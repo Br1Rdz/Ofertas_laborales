@@ -304,7 +304,7 @@ def main():
             display_map(df_filtrada)
             
     if Campo_laboral != '':
-            grafico_barras(df_filtrada, Campo_laboral)
+        grafico_barras(df_filtrada, Campo_laboral)
                 
         with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
                 
