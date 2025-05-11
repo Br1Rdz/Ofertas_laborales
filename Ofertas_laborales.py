@@ -182,8 +182,11 @@ def cluster_sueldo(df):
 def main():
     '''Funcion principal de la applicacion'''
     #-------- configuracion de pagina ------------
-    
-    st.set_page_config(APP_TITLE, layout = 'wide', initial_sidebar_state = "collapsed") # esto es por si sale un espacio entre graficos
+    st.set_page_config(page_title="BioEmpleo", 
+                    page_icon="🌱", 
+                   layout="wide",
+                   initial_sidebar_state="collapsed",
+                   menu_items=None)
     st.title(APP_TITLE)
     st.caption(APP_SUB_TITLE)
     
