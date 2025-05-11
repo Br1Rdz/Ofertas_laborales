@@ -310,7 +310,7 @@ def main():
     if Campo_laboral != '':
         barras = grafico_barras(df_filtrada, Campo_laboral)
                 
-        with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
+        with st.expander("Trabajo por Estado", expanded=False): 
                 
              st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
                 
