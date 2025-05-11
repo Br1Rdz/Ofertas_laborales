@@ -140,7 +140,7 @@ def grafico_barras(df, filtro):
     
     fig.update_layout(showlegend=False)
     fig.update_traces(width=0.5)  
-    fig.update_xaxes(ticks = "outside", tickcolor='black', ticklen=10, tickwidth = 0.5)
+    #fig.update_xaxes(ticks = "outside", tickcolor='black', ticklen=10, tickwidth = 0.5)
     fig.update_layout(
     title={
         'x': 0.5,
@@ -201,8 +201,8 @@ def main():
     st.markdown(hide_st_style, unsafe_allow_html= True)
     
     #--------- Carga de datos ------------------
-    df_ofertas_laborales = pd.read_csv('./Tablas_entrada/Tabla_concatenada.csv') # hay que quitar los outlier
-    df_cluster = pd.read_csv('./Tablas_entrada/Tabla_cluster.csv') ## Tabla para los grupos por frecuencia y sueldo
+    df_ofertas_laborales = pd.read_csv('./Tablas_entrada/Tabla_concatenada.csv') 
+    df_cluster = pd.read_csv('./Tablas_entrada/Tabla_cluster.csv') 
     
     #Filtro y mapa
     df_filtrada, Campo_laboral = base_filtrada(df_ofertas_laborales)
@@ -267,7 +267,7 @@ def main():
             st.markdown(
                 "<h6 style='text-align: justify;'>Se muestran los grupos formados a partir de las palabras clave \
                 y los sueldos de todas las ofertas laborales.</h6>", unsafe_allow_html=True)    
-            cluster_sueldo(df_cluster)
+            clusters = cluster_sueldo(df_cluster)
         
     #Filtro de las ofertas laborales
     if Campo_laboral != '':
@@ -304,10 +304,10 @@ def main():
                       delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")
                     
     with st.spinner('Espera mientras elaboró el mapa...'):  
-            display_map(df_filtrada)
+            mapa_ofertas = display_map(df_filtrada)
             
     if Campo_laboral != '':
-        grafico_barras(df_filtrada, Campo_laboral)
+        barras = grafico_barras(df_filtrada, Campo_laboral)
                 
         with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
                 
