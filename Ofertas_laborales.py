@@ -244,7 +244,7 @@ def main():
             if st.button("Click me"):
                 st.write(response_generator(explicacion)) 
          
-        st.header(f'{len(df_ofertas_laborales)} ofertas laborales para biólogo', divider="gray")
+        st.header(f'{len(df_ofertas_laborales)} ofertas laborales para biólogo')
         col1, col2 = st.columns(2)
         ## edicion del tamaño de letra
         st.markdown(
