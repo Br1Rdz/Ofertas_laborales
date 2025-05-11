@@ -146,6 +146,7 @@ def grafico_barras(df, filtro):
         'xanchor': 'center'
         }
     )
+    fig.update_layout(xaxis_title_side='center')
     return st.plotly_chart(fig, use_container_width=True)
 
 ### Graficode clusters
