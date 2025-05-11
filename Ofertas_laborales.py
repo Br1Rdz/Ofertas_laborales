@@ -135,8 +135,9 @@ def grafico_barras(df, filtro):
     tabla = pd.DataFrame(diccionario) 
 
     # titulo = 'Laboratorio'
-    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra', text_auto = True,
-                 title= f'Top 5 de palabras más frecuentes para {filtro}')
+    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra',width=600,
+             height=400, title= f'Top 5 de palabras más frecuentes para {filtro}')
+    
     fig.update_layout(showlegend=False)
     fig.update_traces(width=0.5)  
     fig.update_layout(
@@ -146,7 +147,7 @@ def grafico_barras(df, filtro):
         }
     )
     
-    return st.plotly_chart(fig, use_container_width=True)
+    return st.plotly_chart(fig, theme=None, use_container_width=True)
 
 ### Graficode clusters
 def cluster_sueldo(df):
@@ -170,7 +171,7 @@ def cluster_sueldo(df):
         }
     )
 
-    return st.plotly_chart(fig, use_container_width=True)
+    return st.plotly_chart(fig, theme=None, use_container_width=True)
 
 # ----------------- MAIN -------------------
 def main():
