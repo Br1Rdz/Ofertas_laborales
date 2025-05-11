@@ -9,6 +9,7 @@ from sklearn.cluster import KMeans
 import sklearn.cluster as cluster
 from sklearn.linear_model import LinearRegression
 
+
 APP_TITLE = 'Ofertas laborales en México'
 APP_SUB_TITLE = 'Fuente de OCC y Computrabajo'
 
@@ -17,7 +18,7 @@ def response_generator(texto):
     '''Esta funcion es para mostrar texto letra por letra con un retraso'''
     for letra in texto.split():
         yield letra + " "
-        time.sleep(0.2)  
+        time.sleep(0.05)  
 
 # ----------------- FILTRADO -------------------
 def base_filtrada(df):
@@ -25,20 +26,22 @@ def base_filtrada(df):
     
     lista_laboral = [''] + list(df['Relación_profesional'].unique())
     lista_laboral.sort()
-    Campo_laboral = st.sidebar.selectbox('Relación profesional', lista_laboral)  
+    Campo_laboral = st.sidebar.selectbox('Relación profesional', lista_laboral)
         
     if Campo_laboral:
         df = df[df['Relación_profesional'] == Campo_laboral]      
+    
     
     #numero de filas con coencidencia
     numero = len(df)
     
     if Campo_laboral:
-        st.subheader(f'{numero} ofertas laborales para {Campo_laboral}')
+        st.subheader(f'{numero} ofertas laborales para {Campo_laboral}', divider="gray")
 
     return df, Campo_laboral
 
 # ----------------- Metrica -------------------
+
 def sueldo_min_max_estado(df):
     sueldo_minimo = 0
     estado_minimo = "No disponible"
@@ -55,6 +58,7 @@ def sueldo_min_max_estado(df):
                 estado_maximo = estado
                 
     return sueldo_minimo, estado_minimo, estado_maximo, sueldo_maximo
+
 
 def ingreso_mensual(df, filtro):
     '''Funcion filtra el ingreso mensual por estado'''
@@ -75,7 +79,8 @@ def ingreso_mensual(df, filtro):
 def display_map(df):
     '''Funcion empleada para visualizar la distribución geográfica de las ofertas laborales'''
     # Agrupar y resetar el índice para que 'Estado' sea una columna
-    df = df.groupby('Estado').size().reset_index(name='Conteo')    
+    df = df.groupby('Estado').size().reset_index(name='Conteo')
+    
     # Verificar que hay datos
     if df.empty:
         st.warning("No hay datos para mostrar el mapa.")
@@ -105,8 +110,9 @@ def display_map(df):
         folium.features.GeoJsonTooltip(
             fields=["sta_name"],
             labels=False
+         
             ))
-    st_map = st_folium(map, width=700, height=450,  key="map")
+    st_map = st_folium(map, width=700, height=450,  key="map", use_container_width=True, returned_objects=["last_object_clicked"])
     
 # ----------------- Gráficos -------------------    
 def grafico_barras(df, filtro):
@@ -135,21 +141,17 @@ def grafico_barras(df, filtro):
     tabla = pd.DataFrame(diccionario) 
 
     # titulo = 'Laboratorio'
-    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra', 
-                 title= f'Top 5 de palabras más frecuentes para {filtro}')
+    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra', title= f'Top 5 de palabras más frecuentes para {filtro}',
+             height=400)
     
     fig.update_layout(showlegend=False)
-    fig.update_traces(width=0.5)  
-    fig.update_xaxes(automargin="height+width")
-    #fig.update_xaxes(ticks = "outside", tickcolor='black', ticklen=10, tickwidth = 0.5)
     fig.update_layout(
     title={
         'x': 0.5,
         'xanchor': 'center'
         }
     )
-    
-    return st.plotly_chart(fig)
+    return st.plotly_chart(fig, use_container_width=True)
 
 ### Graficode clusters
 def cluster_sueldo(df):
@@ -163,8 +165,9 @@ def cluster_sueldo(df):
 
     fig = px.scatter(df, x='Sueldo', y='Frecuencia', color='Grupo',
                     hover_data= 'Palabra',
-                    color_discrete_sequence=px.colors.qualitative.G10,
-                    category_orders={"Grupo": ["1", "2", "3", "4"]},
+                    color_discrete_sequence=["red", "green", "blue", "orange", "mediumpurple"],
+                    #color_discrete_sequence=px.colors.qualitative.G10,
+                    category_orders={"Grupo": ["1", "2", "3", "4", "5"]},
                     title="Sueldos y palabras claves")
     fig.update_layout(
     title={
@@ -173,14 +176,14 @@ def cluster_sueldo(df):
         }
     )
 
-    return st.plotly_chart(fig)
+    return st.plotly_chart(fig, use_container_width=True)
 
 # ----------------- MAIN -------------------
 def main():
     '''Funcion principal de la applicacion'''
-    #-------- configuracion de pagina ------------  
+    #-------- configuracion de pagina ------------
     
-    st.set_page_config(APP_TITLE, layout = 'centered', initial_sidebar_state = "collapsed") # esto es por si sale un espacio entre mapa y gráfico de barras
+    st.set_page_config(APP_TITLE, layout = 'wide', initial_sidebar_state = "collapsed") # esto es por si sale un espacio entre graficos
     st.title(APP_TITLE)
     st.caption(APP_SUB_TITLE)
     
@@ -204,17 +207,20 @@ def main():
     #--------- Carga de datos ------------------
     df_ofertas_laborales = pd.read_csv('./Tablas_entrada/Tabla_concatenada.csv') 
     df_cluster = pd.read_csv('./Tablas_entrada/Tabla_cluster.csv') 
-    
+
     #Filtro y mapa
     df_filtrada, Campo_laboral = base_filtrada(df_ofertas_laborales)
     
+    # distribucion_ofertas = display_map(df_filtrada)
     sueldo_minimo, estado_minimo, estado_maximo, sueldo_maximo = sueldo_min_max_estado(df_filtrada)
     
-    ingreso_minimo:int = ingreso_mensual(df_filtrada, estado_minimo)
-    ingreso_maximo:int = ingreso_mensual(df_filtrada, estado_maximo)
+    # tipar variables https://cosasdedevs.com/posts/tipado-python/
+    ingreso_minimo:int = ingreso_mensual(df_filtrada, estado_minimo)# Hay que tener cuidado con las columnas de sueldo e ingreso
+    ingreso_maximo:int = ingreso_mensual(df_filtrada, estado_maximo)# porque libreoffice cal puede ponerlas como text
     
     sueldo_ingreso_minimo:int = round(ingreso_minimo - sueldo_minimo)
     sueldo_ingreso_maximo:int = round(sueldo_maximo - ingreso_maximo)
+    
     
     ## variable de uso de app
     explicacion = '''Esta aplicación utiliza información recopilada de ofertas laborales 
@@ -226,6 +232,7 @@ def main():
                  El ingreso necesario para cubrir gastos básicos puede variar dependiendo de la región,
                  el tamaño del hogar y el estilo de vida. Los gastos básicos que pueden incluirse en el presupuesto son:
                  Comida, vivienda, servicios, transporte, educación y vestimenta.'''
+
                 
     ## configuracion de app            
     st.sidebar.info(markdown)
@@ -243,8 +250,9 @@ def main():
         with st.expander('Uso de la app'):
             if st.button("Click me"):
                 st.write(response_generator(explicacion)) 
+
          
-        st.header(f'{len(df_ofertas_laborales)} ofertas laborales para biólogo')
+        st.header(f'{len(df_ofertas_laborales)} ofertas laborales para biólogo', divider="gray")
         col1, col2 = st.columns(2)
         ## edicion del tamaño de letra
         st.markdown(
@@ -268,13 +276,14 @@ def main():
             st.markdown(
                 "<h6 style='text-align: justify;'>Se muestran los grupos formados a partir de las palabras clave \
                 y los sueldos de todas las ofertas laborales.</h6>", unsafe_allow_html=True)    
-            clusters = cluster_sueldo(df_cluster)
+            cluster_sueldo(df_cluster)
         
     #Filtro de las ofertas laborales
     if Campo_laboral != '':
         with st.expander('Que es el ingreso mensual necesario (ENSAFI,2024)'):
             if st.button("Explicacion"):
                 st.write(response_generator(ENSAFI)) 
+        
         
         columna1, columna2 = st.columns(2)
         ## edicion del tamaño de letra
@@ -303,46 +312,53 @@ def main():
             st.metric(label= f'Máximo mensual en {estado_maximo}', 
                       value= '${:,}'.format(round(sueldo_maximo)),
                       delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")
-                    
-    with st.spinner('Espera mientras elaboró el mapa...'):  
-            mapa_ofertas = display_map(df_filtrada)
             
+    # st.balloons()
+    with st.spinner('Espera mientras elaboró el mapa...'):  
+        display_map(df_filtrada)
+
     if Campo_laboral != '':
-        barras = grafico_barras(df_filtrada, Campo_laboral)
-                
-        with st.expander("Trabajo por Estado", expanded=False): 
-                
-             st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
-                
-             df_filled = df_filtrada.fillna('No disponible') ## sale un warning
-                
-             st.dataframe(df_filled,
-                                column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), ## Hay que agragar la de ingreso_mensual
-                                hide_index = True,
-                                width = 800,
-                                height = 200,
-                                column_config={
-                                "Nombre": st.column_config.TextColumn(
-                                    "Puesto",
-                                    help="Nombre del puesto"
-                                    ),
-                                "Ciudad": st.column_config.TextColumn(
-                                    "Localidad",
-                                    help="Ubicación del puesto"
-                                    ),
-                                "Sueldo": st.column_config.NumberColumn(
-                                    "Sueldo (mensual)",
-                                    help="Sueldo del puesto",
-                                    format="$%d"
+        grafico_barras(df_filtrada, Campo_laboral)
+    
+            
+        with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
+            
+            st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
+            
+            df_filled = df_filtrada.fillna('No disponible') 
+            
+            st.dataframe(df_filled,
+                            column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), 
+                            hide_index = True,
+                            width = 800,
+                            height = 200,
+                            column_config={
+                            "Nombre": st.column_config.TextColumn(
+                                "Puesto",
+                                help="Nombre del puesto"
+                           
                                 ),
-                                "Ingreso_mensual": st.column_config.NumberColumn(
-                                    "Ingreso (ENSAFI,2024)",
-                                    help="Ingreso minimo necesario",
-                                    format="$%d"
-                                )
-                                },use_container_width = True
-                            )   
+                            "Ciudad": st.column_config.TextColumn(
+                                "Localidad",
+                                help="Ubicación del puesto"
                         
+                                ),
+                            "Sueldo": st.column_config.NumberColumn(
+                                "Sueldo (mensual)",
+                                help="Sueldo del puesto",
+                                format="$%d"
+                           
+                            ),
+                            "Ingreso_mensual": st.column_config.NumberColumn(
+                                "Ingreso (ENSAFI,2024)",
+                                help="Ingreso minimo necesario",
+                                format="$%d"
+                       
+                            )
+                            },
+                            use_container_width = True
+                        )   
+                    
 
 if __name__ == '__main__':
     main()
