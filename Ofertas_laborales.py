@@ -140,13 +140,14 @@ def grafico_barras(df, filtro):
     
     fig.update_layout(showlegend=False)
     fig.update_traces(width=0.5)  
+    fig.update_layout(xaxis_title_side='center')
     fig.update_layout(
     title={
         'x': 0.5,
         'xanchor': 'center'
         }
     )
-    fig.update_layout(xaxis_title_side='center')
+    
     return st.plotly_chart(fig, use_container_width=True)
 
 ### Graficode clusters
