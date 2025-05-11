@@ -135,7 +135,7 @@ def grafico_barras(df, filtro):
     tabla = pd.DataFrame(diccionario) 
 
     # titulo = 'Laboratorio'
-    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra',
+    fig = px.bar(tabla, x='Palabra', y='Frecuencia',color='Palabra', text_auto = True,
                  title= f'Top 5 de palabras más frecuentes para {filtro}')
     fig.update_layout(showlegend=False)
     fig.update_traces(width=0.5)  
