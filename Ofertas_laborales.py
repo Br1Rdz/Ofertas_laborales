@@ -17,7 +17,7 @@ def response_generator(texto):
     '''Esta funcion es para mostrar texto letra por letra con un retraso'''
     for letra in texto.split():
         yield letra + " "
-        time.sleep(0.1)  
+        time.sleep(0.2)  
 
 # ----------------- FILTRADO -------------------
 def base_filtrada(df):
@@ -299,22 +299,20 @@ def main():
             st.metric(label= f'Máximo mensual en {estado_maximo}', 
                       value= '${:,}'.format(round(sueldo_maximo)),
                       delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")
-            
-    with st.container():
-        
-        with st.spinner('Espera mientras elaboró el mapa...'):  
+                    
+    with st.spinner('Espera mientras elaboró el mapa...'):  
             display_map(df_filtrada)
             
-        if Campo_laboral != '':
+    if Campo_laboral != '':
             grafico_barras(df_filtrada, Campo_laboral)
                 
-            with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
+        with st.expander("Trabajo por Estado", icon="🔥", expanded=False): 
                 
-                st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
+             st.markdown("<h6 style='text-align: center;'>Ofertas laborales por localidad</h6>", unsafe_allow_html=True) 
                 
-                df_filled = df_filtrada.fillna('No disponible') ## sale un warning
+             df_filled = df_filtrada.fillna('No disponible') ## sale un warning
                 
-                st.dataframe(df_filled,
+             st.dataframe(df_filled,
                                 column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), ## Hay que agragar la de ingreso_mensual
                                 hide_index = True,
                                 width = 800,
