@@ -318,8 +318,17 @@ def main():
         with st.expander('# Grupos de sueldos y palabras claves'):
             st.markdown(
                 "<h6 style='text-align: justify;'>Se muestran los grupos formados a partir de las palabras clave \
-                y los sueldos de todas las ofertas laborales.</h6>", unsafe_allow_html=True)    
+                y los sueldos de todas las ofertas laborales.</h6>", unsafe_allow_html=True)  
+            #graficos de cluster
             cluster_sueldo(df_cluster)
+
+        with st.expander('Discrepancia entre sueldos e ingreso mínimo necesario'):
+            st.markdown(
+                "<h6 style='text-align: justify;'>Se muestran las diferencias entre el promedio de las ofertas de los \
+                sueldos por entidad federativa y el ingreso mínimo necesario \
+                </h6>", unsafe_allow_html=True)     
+            #grafico de discrepancia
+            sueldo_discrepancias(df_ofertas_laborales)
         
     #Filtro de las ofertas laborales
     if Campo_laboral != '':
