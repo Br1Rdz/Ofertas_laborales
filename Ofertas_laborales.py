@@ -178,6 +178,43 @@ def cluster_sueldo(df):
 
     return st.plotly_chart(fig, use_container_width=True)
 
+# ----------------- Discrepancias-----------
+def sueldo_discrepancias(df):
+    '''Funcion que grafica las discrepancias entre sueldos e ingreso necesario'''
+    import plotly.graph_objects as px
+    df = df.groupby('Estado')[['Sueldo', 'Ingreso_mensual']] \
+                            .mean().round(2).dropna().reset_index()
+    #Grafico de disrepancia
+    fig = px.Figure(data=[px.Bar(
+    name = 'Sueldo promedio',
+    marker_color='#25d172',
+    x = df['Estado'],
+    y = df['Sueldo']
+    ),
+                       px.Bar(
+    name = 'Ingreso básico necesario',
+    marker_color = '#fc0e03',
+    x = df['Estado'],
+    y = df['Ingreso_mensual']
+    )
+    ])
+
+    fig.update_layout(
+    title={
+        'text': "Sueldo vs ingreso básico necesario",
+        'x':0.5,
+        'xanchor': 'center'})
+    
+    fig.update_layout(legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+    ))
+
+    return st.plotly_chart(fig, use_container_width=True)
+
 # ----------------- MAIN -------------------
 def main():
     '''Funcion principal de la applicacion'''
@@ -226,15 +263,18 @@ def main():
     
     
     ## variable de uso de app
-    explicacion = '''Esta aplicación utiliza información recopilada de ofertas laborales 
-                   para biólogx de los portales OCC y Computrabajo. 
-                   Selecciona de la barra lateral la 'Relación profesional' para comenzar.'''
-    
-    ENSAFI = ''' En promedio, un mexicano necesita un ingreso mensual de $16,421 para cubrir sus gastos básicos,
-                 según la Encuesta Nacional sobre Finanzas Individuales (ENSAFI, 2024).
-                 El ingreso necesario para cubrir gastos básicos puede variar dependiendo de la región,
-                 el tamaño del hogar y el estilo de vida. Los gastos básicos que pueden incluirse en el presupuesto son:
-                 Comida, vivienda, servicios, transporte, educación y vestimenta.'''
+     explicacion = '''Esta aplicación utiliza información recopilada de ofertas laborales para biólogos 
+                        y biólogas publicadas en los portales OCC y Computrabajo. En esta primera sección se presenta:
+                        La distribución geográfica de todas las ofertas laborales.
+                        Los grupos de palabras clave asociados y los sueldos correspondientes.
+                        La discrepancia entre el sueldo promedio ofrecido por entidad federativa y 
+                        el ingreso mensual necesario estimado por la ENSAFI (2024).
+                        Según la Encuesta Nacional sobre Finanzas Individuales (ENSAFI, 2024),
+                        en promedio, una persona en México necesita $16,421 pesos mensuales para cubrir sus gastos básicos.
+                        Este monto puede variar según la región, el tamaño del hogar y el estilo de vida.
+                        Los gastos básicos considerados incluyen alimentación, vivienda, servicios, transporte, educación y vestimenta.
+                        Desde la barra lateral, selecciona la opción "Relación profesional" 
+                        para explorar las distintas categorías de las ofertas laborales.'''
 
                 
     ## configuracion de app            
@@ -283,9 +323,9 @@ def main():
         
     #Filtro de las ofertas laborales
     if Campo_laboral != '':
-        with st.expander('Que es el ingreso mensual necesario (ENSAFI,2024)'):
-            if st.button("Explicacion"):
-                st.write(response_generator(ENSAFI)) 
+        # with st.expander('Que es el ingreso mensual necesario (ENSAFI,2024)'):
+        #     if st.button("Explicacion"):
+        #         st.write(response_generator(ENSAFI)) 
         
         
         columna1, columna2 = st.columns(2)
@@ -308,11 +348,11 @@ def main():
                 
         col1, col2 = st.columns(2)
         with col1:
-            st.metric(label= f'Mínimo mensual en {estado_minimo}', 
+            st.metric(label= f'Sueldo oferta mínimo mensual en {estado_minimo}', 
                       value= '${:,}'.format(round(sueldo_minimo)),
                       delta = f'-${sueldo_ingreso_minimo:,}', delta_color="normal")
         with col2:
-            st.metric(label= f'Máximo mensual en {estado_maximo}', 
+            st.metric(label= f'Sueldo oferta máximo mensual en {estado_maximo}', 
                       value= '${:,}'.format(round(sueldo_maximo)),
                       delta = f'${sueldo_ingreso_maximo:,}', delta_color="normal")
             
@@ -331,7 +371,7 @@ def main():
             df_filled = df_filtrada.fillna('No disponible') 
             
             st.dataframe(df_filled,
-                            column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual'), 
+                            column_order=('Nombre', 'Ciudad', 'Sueldo', 'Ingreso_mensual', 'Diferencia'), 
                             hide_index = True,
                             width = 800,
                             height = 200,
@@ -357,6 +397,11 @@ def main():
                                 help="Ingreso minimo necesario",
                                 format="$%d"
                        
+                            ),
+                            "Diferencia":st.column_config.NumberColumn(
+                            "Discrepancia",
+                            help="Discrepancia entre sueldo e ingreso mínimo necesario",
+                            format="$%d"
                             )
                             },
                             use_container_width = True
