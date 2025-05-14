@@ -263,7 +263,7 @@ def main():
     
     
     ## variable de uso de app
-     explicacion = '''Esta aplicación utiliza información recopilada de ofertas laborales para biólogos 
+    explicacion = '''Esta aplicación utiliza información recopilada de ofertas laborales para biólogos 
                         y biólogas publicadas en los portales OCC y Computrabajo. En esta primera sección se presenta:
                         La distribución geográfica de todas las ofertas laborales.
                         Los grupos de palabras clave asociados y los sueldos correspondientes.
