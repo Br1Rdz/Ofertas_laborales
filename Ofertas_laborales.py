@@ -8,6 +8,7 @@ import plotly.express as px
 from sklearn.cluster import KMeans
 import sklearn.cluster as cluster
 from sklearn.linear_model import LinearRegression
+import joblib
 
 
 APP_TITLE = 'Ofertas laborales en México'
