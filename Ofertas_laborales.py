@@ -367,7 +367,7 @@ def main():
             #grafico de discrepancia
             sueldo_discrepancias(df_ofertas_laborales)
 
-         with st.expander('Predicción de sueldo'):
+        with st.expander('Predicción de sueldo'):
             # Random Forest Regression
             st.markdown(
                 "<h6 style='text-align: justify;'>La predicción del sueldo se realiza considerando \
