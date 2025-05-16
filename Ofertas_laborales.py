@@ -323,7 +323,10 @@ def main():
     
     ##Tabla sin sueldos NaN
     valores = df_ofertas_laborales['Sueldo'].dropna()
-    
+
+    #modelo de Random Forest regression
+    model = joblib.load('./model_RandomForestRegressor.pkl')
+
     #todas las ofertas laborales
     if Campo_laboral == '':
         
