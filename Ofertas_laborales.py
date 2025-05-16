@@ -215,6 +215,40 @@ def sueldo_discrepancias(df):
 
     return st.plotly_chart(fig, use_container_width=True)
 
+# ----------------- Preddicion con Random Forest regression -----------
+def prediccion_rfr(df):
+    '''Funcion predice el sueldo mediante Random Forest regression a partir del estado y la relacion profesional'''
+    #Dataframe extraccion
+    df = df[['Nombre','Estado','id_estado','Relación_profesional','id_relaciones','Sueldo']] \
+                                                    .dropna(subset=['Sueldo']).reset_index(drop=True)
+    col1, col2 = st.columns(2)
+    with col1:
+    #Lista de estados
+        lista_estados = [''] + list(df['Estado'].unique())
+        lista_estados.sort()
+        estado_id =  st.selectbox('Estado', lista_estados )
+        
+    with col2:
+    #lista de relaciones profesionales
+        lista_relaciones = [''] + list(df['Relación_profesional'].unique())
+        lista_relaciones.sort()
+        relacion_id = st.selectbox('Relación profesional', lista_relaciones)
+   
+    X_array = None   
+    
+    if estado_id != '' and relacion_id != '':    
+        estado_oferta = [df[df['Estado'] == estado_id]['id_estado'].unique()][0]
+        relacion_oferta = [df[df['Relación_profesional']== relacion_id]['id_relaciones'].unique()][0]
+        
+        X = [[int(estado_oferta) , int(relacion_oferta)]]
+        X_array = np.array(X)
+        
+    else:
+        st.warning("Por favor selecciona *Estado* y *Campo profesional* para realizar la predicción.")
+
+    return  estado_id, relacion_id, X_array
+
+
 # ----------------- MAIN -------------------
 def main():
     '''Funcion principal de la applicacion'''
@@ -247,6 +281,8 @@ def main():
     #--------- Carga de datos ------------------
     df_ofertas_laborales = pd.read_csv('./Tablas_entrada/Tabla_concatenada.csv') 
     df_cluster = pd.read_csv('./Tablas_entrada/Tabla_cluster.csv') 
+    df_ofertas_ids = pd.read_csv('./Tablas_entrada/Tabla_concatenada_ids_estad_sin_otros.csv') ## con ids de estado y ids relaciones
+
 
     #Filtro y mapa
     df_filtrada, Campo_laboral = base_filtrada(df_ofertas_laborales)
@@ -329,14 +365,23 @@ def main():
                 </h6>", unsafe_allow_html=True)     
             #grafico de discrepancia
             sueldo_discrepancias(df_ofertas_laborales)
+
+         with st.expander('Predicción de sueldo'):
+            # Random Forest Regression
+            st.markdown(
+                "<h6 style='text-align: justify;'>La predicción del sueldo se realiza considerando \
+                la ubicación geográfica y su relación profesional. \
+                </h6>", unsafe_allow_html=True)
+            
+            estado_id, relacion_id, X_array = prediccion_rfr(df_ofertas_ids)
+        
+            prediccion_button = st.button('Preciona para predecir')    
+            if prediccion_button:
+                prediction = model.predict(X_array)
+                st.write(f'Tu sueldo para {relacion_id} en {estado_id} seria ${prediction[0]:,.2f}')
         
     #Filtro de las ofertas laborales
-    if Campo_laboral != '':
-        # with st.expander('Que es el ingreso mensual necesario (ENSAFI,2024)'):
-        #     if st.button("Explicacion"):
-        #         st.write(response_generator(ENSAFI)) 
-        
-        
+    if Campo_laboral != '':       
         columna1, columna2 = st.columns(2)
         ## edicion del tamaño de letra
         st.markdown(
