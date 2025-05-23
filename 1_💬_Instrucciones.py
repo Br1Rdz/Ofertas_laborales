@@ -62,24 +62,6 @@ st.markdown(
     unsafe_allow_html=True
 )    
     
-# markdown_principal = '''
-# :grey-background[Funcionalidades de la App:]
-
-# Esta aplicación utiliza información recopilada de ofertas laborales de los portales :red[OCC y Computrabajo] dirigidas a biólogos y biólogas 
-# para los meses de Mayo y Abril del 2025.
-# * Analiza los datos y presenta visualizaciones interactivas que permiten:
-
-#     * :orange[Mapa de distribución geográfica:] Muestra la ubicación de las ofertas laborales.
-
-#     * :orange[Análisis de palabras clave:] Genera gráficos de barras con las palabras más frecuentes en las descripciones de los puestos.
-
-#     * :orange[Comparación salarial:] Presenta un gráfico de barras que contrasta los salarios ofrecidos con los ingreso mensual necesario ([ENSAFI, 2024](https://es.linkedin.com/posts/rodrigoehlers_cu%C3%A1nto-cuesta-vivir-en-cada-estado-en-2025-activity-7288245570329001984-0yuY)).
-
-#     * :orange[Análisis de clusters:] Agrupa las ofertas laborales en clusters basados en las palabras clave y los salarios promedios
-# '''
-
-# st.markdown(markdown_principal, unsafe_allow_html=True) 
-
 st.markdown(
     """
 <div style="text-align: justify;">
@@ -98,17 +80,3 @@ st.markdown(
 """,
     unsafe_allow_html=True
 )    
-
-
-# markdown_uso = '''
-# :grey-background[Para iniciar:]
-
-# Desde la barra lateral, selecciona las distintas opciones:
-
-# * :orange[Ofertas laborales.] Información de ofertas laborales para biólogos y biólogas en México.  
-#     * Seleccione la :red[Relación profesional] para explorar las diferentes categorias.\n
-#         * :red-background[Nota: Las categorias se desarrollarón basondose en el apartado :orange[Campo de trabajo] de este sitio: [FCB-UJED](https://mx.fcbujed.com/mx/carrera-de-biologo)] 
-
-# * :orange[Conclusiones.]
-# '''
-# st.markdown(markdown_uso , unsafe_allow_html=True)
