@@ -1,5 +1,6 @@
 streamlit==1.38.0
 pandas==2.2.2
+geopandas==1.0.1
 folium==0.19.5
 streamlit-folium==0.22.0
 nltk==3.9.1
