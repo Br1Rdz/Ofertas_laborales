@@ -56,6 +56,9 @@ st.markdown(
     <li>
         <span style="color:orange;">Análisis de clusters:</span> Agrupa las ofertas laborales en clusters basados en las palabras clave y los salarios promedios
     </li>
+    <li>
+        <span style="color:orange;">Predicción de sueldo:</span> Predicción de sueldo a partir de la localidad y relación profesional, por medio de Random Forest Regression.
+    </li>
     </ul>
 </div>
 """,
