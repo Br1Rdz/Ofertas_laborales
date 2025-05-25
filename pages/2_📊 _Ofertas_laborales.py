@@ -363,7 +363,8 @@ def main():
             if prediccion_button:
                 prediction = model.predict(X_array)
                 st.write(f'El sueldo para {relacion_id} en {estado_id} seria ${prediction[0]:,.2f}')
-        
+                st.audio('data/Finish.mp3', autoplay=True)
+                
     #Filtro de las ofertas laborales
     if Campo_laboral != '':
         
