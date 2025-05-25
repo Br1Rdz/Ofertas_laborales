@@ -5,6 +5,14 @@ st.set_page_config(page_title="Concluciones",
                     layout="wide",
                     initial_sidebar_state="collapsed",
                     menu_items=None)
+hide_st_style = '''
+                    <style>
+                    #Main Menu {visibility:hidden;}
+                    footer {visibility:hidden;}
+                    header {visibility:hidden;}
+                    </style>
+    '''
+st.markdown(hide_st_style, unsafe_allow_html= True)
 
 st.logo("./Informacion.png", icon_image="./info2.png")
 
