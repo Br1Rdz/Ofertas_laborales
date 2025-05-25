@@ -26,7 +26,7 @@ st.markdown(
         tiene rango de sueldos promedio entre <span style="color:orange;">$12,000 y $15,000 pesos mensuales</span>.
         No obstante, se reconoce la necesidad de refinar el análisis semántico,
         ya que algunas palabras incluidas podrían no tener una relevancia significativa.</li>
-        <li>El Estado de México (México) fue la entidad federativa con el mayor número de vacantes,
+        <li>El Estado de México fue la entidad federativa con el mayor número de vacantes,
         registrando un total de 70 ofertas. Sin embargo, esta entidad también presentó una discrepancia
         entre el sueldo promedio ofrecido y el ingreso necesario mensual estimado por ENSAFI (2024),
         con una diferencia de <span style="color:red;">$5,141 pesos</span>.</li>
