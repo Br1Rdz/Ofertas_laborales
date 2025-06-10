@@ -24,7 +24,7 @@ st.markdown(hide_st_style, unsafe_allow_html= True)
 st.sidebar.info(markdown)
 st.sidebar.info("Github: [Br1Rdz](%s)" % url)
 
-logo = "./Clicker.png"
+logo = "./LOGO.png"
 st.sidebar.image(logo) 
 st.logo("./Informacion.png", icon_image="./info2.png")
 
