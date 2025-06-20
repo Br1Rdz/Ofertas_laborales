@@ -1,4 +1,4 @@
-<h1 style='text-align: center; font-size: 25px; color: white;'>🌿 Análisis de Ofertas laborales para Biologos 🧪</h1>
+<h1 style='text-align: center; font-size: 25px; color: white;'>🧪 Análisis de Ofertas laborales para Biologos</h1>
 
 > [!NOTE]
 > <div align="justify"> Esta aplicación utiliza información recopilada mediante técnicas de web scraping a partir de portales de ofertas laborales dirigidas a profesionales en Biología. Los datos corresponden a los meses de abril y mayo del 2025. Posteriormente, la información fue procesada, depurada y estructurada para facilitar su análisis y visualización interactiva. Esta etapa incluyó la limpieza de datos redundantes, estandarización de campos clave y preparación para su integración en la interfaz de la app.</div>  
