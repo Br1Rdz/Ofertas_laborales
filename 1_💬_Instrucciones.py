@@ -76,7 +76,7 @@ st.markdown(
         <span style="color:orange;">Ofertas laborales.</span> Información de ofertas laborales para biólogos y biólogas en México.
         <br>* Posteriormente seleccione la <span style="color:red;">Relación profesional</span> para explorar las diferentes categorias. 
         <br>* <span style="color:red;">Nota:</span> Las categorias se desarrollarón basondose en el apartado <span style="color:red;">Campo de trabajo</span> de este sitio:
-        <a href="https://mx.fcbujed.com/mx/carrera-de-biologo" target="_blank" style="color:green; text-decoration:underline;">FCB-UJED</a> 
+        <a href="https://mx.fcbujed.com/mx/carrera-de-biologo" target="_blank" style="color:#04fcb5; text-decoration:underline;">FCB-UJED</a> 
         </li>
     </ul>
 </div>
