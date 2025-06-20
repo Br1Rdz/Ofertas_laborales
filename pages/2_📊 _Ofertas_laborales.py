@@ -274,7 +274,6 @@ def main():
                      menu_items=None)
     st.markdown("<h1 style='text-align: center; color: white;'>Ofertas laborales en México</h1>", unsafe_allow_html=True)
 
-    st.title(APP_TITLE)
     st.caption(APP_SUB_TITLE)
     
     #link de Contacto
