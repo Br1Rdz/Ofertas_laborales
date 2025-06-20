@@ -50,7 +50,7 @@ st.markdown(
     </li>
     <li>
         <span style="color:orange;">Comparación salarial:</span> Presenta un gráfico de barras que contrasta los salarios ofrecidos
-        con los ingreso mensual necesario <a href="https://es.linkedin.com/posts/rodrigoehlers_cu%C3%A1nto-cuesta-vivir-en-cada-estado-en-2025-activity-7288245570329001984-0yuY" target="_blank" style="color:blue; text-decoration:underline;">
+        con los ingreso mensual necesario <a href="https://es.linkedin.com/posts/rodrigoehlers_cu%C3%A1nto-cuesta-vivir-en-cada-estado-en-2025-activity-7288245570329001984-0yuY" target="_blank" style="color:#04fcb5; text-decoration:underline;">
         ENSAFI, 2024</a>
     </li>
     <li>
