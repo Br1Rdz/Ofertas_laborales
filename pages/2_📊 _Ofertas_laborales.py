@@ -13,7 +13,7 @@ from sklearn.cluster import KMeans
 import sklearn.cluster as cluster
 import joblib
 
-APP_TITLE = 'Ofertas laborales en México'
+# APP_TITLE = 'Ofertas laborales en México'
 APP_SUB_TITLE = ':briefcase: Fuente de OCC y Computrabajo'
 
 # ----------------- Uso de app -------------------
@@ -272,7 +272,8 @@ def main():
                      layout="wide",
                      initial_sidebar_state="collapsed",
                      menu_items=None)
-    
+    st.markdown("<h1 style='text-align: center; color: white;'>Ofertas laborales en México</h1>", unsafe_allow_html=True)
+
     st.title(APP_TITLE)
     st.caption(APP_SUB_TITLE)
     
