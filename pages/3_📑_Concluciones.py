@@ -16,7 +16,7 @@ st.markdown(hide_st_style, unsafe_allow_html= True)
 
 st.logo("./Informacion.png", icon_image="./info2.png")
 
-st.title('Concluciones')
+st.markdown("<h1 style='text-align: center; color: white;'>Conclusión</h1>", unsafe_allow_html=True)
 
 st.markdown(
     """
