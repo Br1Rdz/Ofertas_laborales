@@ -28,7 +28,7 @@ logo = "./LOGO.png"
 st.sidebar.image(logo) 
 st.logo("./Informacion.png", icon_image="./info2.png")
 
-st.title('Instrucciones')
+st.markdown("<h1 style='text-align: center; color: white;'>Instrucciones</h1>", unsafe_allow_html=True)
 # https://github.com/streamlit/streamlit/issues/2338
 
 st.markdown(
